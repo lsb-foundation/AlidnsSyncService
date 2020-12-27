@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "AlidnsSyncService": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

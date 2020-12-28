@@ -44,19 +44,19 @@ namespace AlidnsSyncService
             try
             {
                 var myIp = await GetMyIpAddress();
-                var domainRecords = GetDnsRecordsByDomainName(_domainName);
+                var domainRecords = GetDnsRecords();
                 var domainToUpdate = domainRecords.FirstOrDefault(r => r.RR == _rr);
                 if (domainToUpdate.Equals(default(DomainRecord)))
                 {
                     var domainRecord = new DomainRecord { RR = _rr, DomainName = _domainName, Value = myIp, TTL = 600 };
-                    AddDnsDomainRecord(domainRecord);
+                    AddDnsRecord(domainRecord);
                     _logger.LogInformation($"Add: {domainRecord}");
                 }
                 else if (domainToUpdate.Value != myIp)
                 {
                     domainToUpdate.DomainName = _domainName;
                     domainToUpdate.Value = myIp;
-                    UpdateDnsDomainRecord(domainToUpdate);
+                    UpdateDnsRecord(domainToUpdate);
                     _logger.LogInformation($"Update: {domainToUpdate}");
                 }
                 else
@@ -78,11 +78,11 @@ namespace AlidnsSyncService
             return await ipResponse.Content.ReadAsStringAsync();
         }
 
-        private IEnumerable<DomainRecord> GetDnsRecordsByDomainName(string domainName)
+        private IEnumerable<DomainRecord> GetDnsRecords()
         {
             IClientProfile profile = DefaultProfile.GetProfile("cn-hangzhou", _accessKeyId, _accessKeySecret);
             DefaultAcsClient client = new DefaultAcsClient(profile);
-            var request = new DescribeDomainRecordsRequest { DomainName = domainName };
+            var request = new DescribeDomainRecordsRequest { DomainName = _domainName };
             var response = client.GetAcsResponse(request);
             return response.DomainRecords.Select(
                 r => new DomainRecord
@@ -94,7 +94,7 @@ namespace AlidnsSyncService
                 });
         }
 
-        private void AddDnsDomainRecord(DomainRecord record)
+        private void AddDnsRecord(DomainRecord record)
         {
             IClientProfile profile = DefaultProfile.GetProfile("cn-hangzhou", _accessKeyId, _accessKeySecret);
             DefaultAcsClient client = new DefaultAcsClient(profile);
@@ -109,7 +109,7 @@ namespace AlidnsSyncService
             client.GetAcsResponse(request);
         }
 
-        private void UpdateDnsDomainRecord(DomainRecord record)
+        private void UpdateDnsRecord(DomainRecord record)
         {
             IClientProfile profile = DefaultProfile.GetProfile("cn-hangzhou", _accessKeyId, _accessKeySecret);
             DefaultAcsClient client = new DefaultAcsClient(profile);

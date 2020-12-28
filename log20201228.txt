@@ -120,3 +120,28 @@
 2020-12-28 15:44:49.473 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
 2020-12-28 15:44:49.475 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
 2020-12-28 15:44:49.480 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.
+2020-12-28 16:04:00.263 +08:00 [INF] Default Quartz.NET properties loaded from embedded resource file
+2020-12-28 16:04:00.716 +08:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-12-28 16:04:00.722 +08:00 [INF] Quartz Scheduler v.3.2.3.0 created.
+2020-12-28 16:04:00.728 +08:00 [INF] RAMJobStore initialized.
+2020-12-28 16:04:00.753 +08:00 [INF] Scheduler meta-data: Quartz Scheduler (v3.2.3.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-12-28 16:04:00.755 +08:00 [INF] Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-12-28 16:04:00.756 +08:00 [INF] Quartz scheduler version: 3.2.3.0
+2020-12-28 16:04:00.759 +08:00 [INF] JobFactory set to: AlidnsSyncService.AlidnsSyncJobFactory
+2020-12-28 16:04:00.775 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-12-28 16:04:00.808 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-12-28 16:04:00.825 +08:00 [INF] Hosting environment: Development
+2020-12-28 16:04:00.826 +08:00 [INF] Content root path: D:\Codes\git_repos\AlidnsSyncService
+2020-12-28 16:04:02.429 +08:00 [INF] Skipped.
+2020-12-28 16:06:07.451 +08:00 [INF] Add: {"RecordId":null,"RR":"abc","DomainName":"microbubu.com","Value":"219.147.11.107","TTL":600}
+2020-12-28 16:06:35.604 +08:00 [INF] Application is shutting down...
+2020-12-28 16:06:35.611 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
+2020-12-28 16:06:35.613 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
+2020-12-28 16:06:35.617 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.

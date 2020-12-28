@@ -49,14 +49,14 @@ namespace AlidnsSyncService
                 if (domainToUpdate.Equals(default(DomainRecord)))
                 {
                     var domainRecord = new DomainRecord { RR = _rr, DomainName = _domainName, Value = myIp, TTL = 600 };
-                    AddDnsRecord(domainRecord);
+                    //AddDnsRecord(domainRecord);
                     _logger.LogInformation($"Add: {domainRecord}");
                 }
                 else if (domainToUpdate.Value != myIp)
                 {
                     domainToUpdate.DomainName = _domainName;
                     domainToUpdate.Value = myIp;
-                    UpdateDnsRecord(domainToUpdate);
+                    //UpdateDnsRecord(domainToUpdate);
                     _logger.LogInformation($"Update: {domainToUpdate}");
                 }
                 else

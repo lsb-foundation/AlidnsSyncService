@@ -10,20 +10,12 @@ namespace AlidnsSyncService
     public class Program
     {
         private static IConfiguration _configuration;
+
         public static void Main(string[] args)
         {
             _configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
-
-            var logPath = _configuration.GetValue<string>("BackgroundTask:LogPath");
-
-            Log.Logger = new LoggerConfiguration()
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .WriteTo.File(logPath, rollingInterval: RollingInterval.Day)
-                .CreateLogger();
 
             CreateHostBuilder(args).Build().Run();
         }
@@ -35,7 +27,17 @@ namespace AlidnsSyncService
                     services.AddSingleton(_configuration)
                             .AddHostedService<Worker>()
                             .AddTransient<AlidnsSyncJob>()
-                            .AddTransient<IJobFactory, AlidnsSyncJobFactory>();
+                            .AddTransient<IJobFactory, AlidnsSyncJobFactory>()
+                            .AddTransient<LoggerConfiguration>();
+
+                    var serviceProvider = services.BuildServiceProvider();
+                    var logPath = _configuration.GetValue<string>("BackgroundTask:LogPath");
+                    logPath = Path.Combine(serviceProvider.GetRequiredService<IHostEnvironment>().ContentRootPath, logPath);
+                    Log.Logger = serviceProvider.GetRequiredService<LoggerConfiguration>()
+                                .Enrich.FromLogContext()
+                                .WriteTo.Console()
+                                .WriteTo.File(logPath, rollingInterval: RollingInterval.Day)
+                                .CreateLogger();
                 })
             .UseWindowsService()
             .UseSystemd()

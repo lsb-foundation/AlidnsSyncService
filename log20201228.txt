@@ -145,3 +145,90 @@
 2020-12-28 16:06:35.611 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
 2020-12-28 16:06:35.613 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
 2020-12-28 16:06:35.617 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.
+2020-12-28 22:48:26.123 +08:00 [INF] Default Quartz.NET properties loaded from embedded resource file
+2020-12-28 22:48:26.220 +08:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-12-28 22:48:26.232 +08:00 [INF] Quartz Scheduler v.3.2.3.0 created.
+2020-12-28 22:48:26.239 +08:00 [INF] RAMJobStore initialized.
+2020-12-28 22:48:26.242 +08:00 [INF] Scheduler meta-data: Quartz Scheduler (v3.2.3.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-12-28 22:48:26.243 +08:00 [INF] Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-12-28 22:48:26.244 +08:00 [INF] Quartz scheduler version: 3.2.3.0
+2020-12-28 22:48:26.246 +08:00 [INF] JobFactory set to: AlidnsSyncService.AlidnsSyncJobFactory
+2020-12-28 22:48:26.253 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-12-28 22:48:26.274 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-12-28 22:48:26.281 +08:00 [INF] Hosting environment: Development
+2020-12-28 22:48:26.281 +08:00 [INF] Content root path: C:\Users\Microbubu\Source\Repos\AlidnsSyncService
+2020-12-28 22:48:27.972 +08:00 [ERR] InvalidAccessKeyId : Specified access key is not found or invalid. : 66CDD0A3-AE5C-4735-AD10-0B52ACD99713
+Aliyun.Acs.Core.Exceptions.ClientException: InvalidAccessKeyId : Specified access key is not found or invalid. : 66CDD0A3-AE5C-4735-AD10-0B52ACD99713
+   at Aliyun.Acs.Core.DefaultAcsClient.ParseAcsResponse[T](AcsRequest`1 request, HttpResponse httpResponse)
+   at Aliyun.Acs.Core.DefaultAcsClient.GetAcsResponse[T](AcsRequest`1 request)
+   at AlidnsSyncService.AlidnsSyncJob.GetDnsRecords() in C:\Users\Microbubu\Source\Repos\AlidnsSyncService\AlidnsSyncJob.cs:line 86
+   at AlidnsSyncService.AlidnsSyncJob.Execute(IJobExecutionContext context) in C:\Users\Microbubu\Source\Repos\AlidnsSyncService\AlidnsSyncJob.cs:line 47
+2020-12-28 22:48:35.362 +08:00 [INF] Application is shutting down...
+2020-12-28 22:48:35.368 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
+2020-12-28 22:48:35.370 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
+2020-12-28 22:48:35.374 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.
+2020-12-28 22:50:23.460 +08:00 [INF] Default Quartz.NET properties loaded from embedded resource file
+2020-12-28 22:50:23.576 +08:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-12-28 22:50:23.584 +08:00 [INF] Quartz Scheduler v.3.2.3.0 created.
+2020-12-28 22:50:23.592 +08:00 [INF] RAMJobStore initialized.
+2020-12-28 22:50:23.596 +08:00 [INF] Scheduler meta-data: Quartz Scheduler (v3.2.3.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-12-28 22:50:23.597 +08:00 [INF] Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-12-28 22:50:23.597 +08:00 [INF] Quartz scheduler version: 3.2.3.0
+2020-12-28 22:50:23.598 +08:00 [INF] JobFactory set to: AlidnsSyncService.AlidnsSyncJobFactory
+2020-12-28 22:50:23.604 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-12-28 22:50:23.626 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-12-28 22:50:23.632 +08:00 [INF] Hosting environment: Development
+2020-12-28 22:50:23.633 +08:00 [INF] Content root path: C:\Users\Microbubu\Source\Repos\AlidnsSyncService
+2020-12-28 22:50:25.255 +08:00 [ERR] InvalidAccessKeyId : Specified access key is not found or invalid. : 4BCD939C-242D-4B4E-A6CD-86E03868B920
+Aliyun.Acs.Core.Exceptions.ClientException: InvalidAccessKeyId : Specified access key is not found or invalid. : 4BCD939C-242D-4B4E-A6CD-86E03868B920
+   at Aliyun.Acs.Core.DefaultAcsClient.ParseAcsResponse[T](AcsRequest`1 request, HttpResponse httpResponse)
+   at Aliyun.Acs.Core.DefaultAcsClient.GetAcsResponse[T](AcsRequest`1 request)
+   at AlidnsSyncService.AlidnsSyncJob.GetDnsRecords() in C:\Users\Microbubu\Source\Repos\AlidnsSyncService\AlidnsSyncJob.cs:line 86
+   at AlidnsSyncService.AlidnsSyncJob.Execute(IJobExecutionContext context) in C:\Users\Microbubu\Source\Repos\AlidnsSyncService\AlidnsSyncJob.cs:line 47
+2020-12-28 22:50:27.416 +08:00 [INF] Application is shutting down...
+2020-12-28 22:50:27.422 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
+2020-12-28 22:50:27.424 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
+2020-12-28 22:50:27.428 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.
+2020-12-28 22:51:28.995 +08:00 [INF] Default Quartz.NET properties loaded from embedded resource file
+2020-12-28 22:51:29.114 +08:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-12-28 22:51:29.121 +08:00 [INF] Quartz Scheduler v.3.2.3.0 created.
+2020-12-28 22:51:29.123 +08:00 [INF] RAMJobStore initialized.
+2020-12-28 22:51:29.126 +08:00 [INF] Scheduler meta-data: Quartz Scheduler (v3.2.3.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-12-28 22:51:29.127 +08:00 [INF] Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-12-28 22:51:29.127 +08:00 [INF] Quartz scheduler version: 3.2.3.0
+2020-12-28 22:51:29.128 +08:00 [INF] JobFactory set to: AlidnsSyncService.AlidnsSyncJobFactory
+2020-12-28 22:51:29.135 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-12-28 22:51:29.161 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-12-28 22:51:29.164 +08:00 [INF] Hosting environment: Development
+2020-12-28 22:51:29.165 +08:00 [INF] Content root path: C:\Users\Microbubu\Source\Repos\AlidnsSyncService
+2020-12-28 22:51:30.090 +08:00 [ERR] InvalidAccessKeyId : Specified access key is not found or invalid. : 663B1485-4C65-4AB4-A883-6D09C56F7195
+Aliyun.Acs.Core.Exceptions.ClientException: InvalidAccessKeyId : Specified access key is not found or invalid. : 663B1485-4C65-4AB4-A883-6D09C56F7195
+   at Aliyun.Acs.Core.DefaultAcsClient.ParseAcsResponse[T](AcsRequest`1 request, HttpResponse httpResponse)
+   at Aliyun.Acs.Core.DefaultAcsClient.GetAcsResponse[T](AcsRequest`1 request)
+   at AlidnsSyncService.AlidnsSyncJob.GetDnsRecords() in C:\Users\Microbubu\Source\Repos\AlidnsSyncService\AlidnsSyncJob.cs:line 86
+   at AlidnsSyncService.AlidnsSyncJob.Execute(IJobExecutionContext context) in C:\Users\Microbubu\Source\Repos\AlidnsSyncService\AlidnsSyncJob.cs:line 47
+2020-12-28 22:51:35.532 +08:00 [INF] Application is shutting down...
+2020-12-28 22:51:35.538 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
+2020-12-28 22:51:35.540 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
+2020-12-28 22:51:35.544 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.

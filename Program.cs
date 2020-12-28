@@ -39,8 +39,8 @@ namespace AlidnsSyncService
                                 .WriteTo.File(logPath, rollingInterval: RollingInterval.Day)
                                 .CreateLogger();
                 })
-            .UseWindowsService()
-            .UseSystemd()
-            .UseSerilog();
+                .UseWindowsService()
+                .UseSystemd()
+                .UseSerilog();
     }
 }

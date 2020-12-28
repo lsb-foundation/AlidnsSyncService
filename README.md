@@ -7,7 +7,7 @@
 3. 修改配置文件appsettings.json中的AccessKeyId和AccessKeySecret值为你的阿里云Key和Secret;
 4. Powershell新建服务：
 ``` ps
-New-Service -Name "AlidnsSync" -BinaryPathName "C:/AlidnsSyncService/AlidnsSyncService.exe" -Description "阿里dns后台同步服务" -StartupType "Automatic" -DisplayName "Alidns Sync Service"
+New-Service -Name "AlidnsSync" -BinaryPathName "C:\AlidnsSyncService\AlidnsSyncService.exe" -Description "阿里dns后台同步服务" -StartupType "Automatic" -DisplayName "Alidns Sync Service"
 ```
 5. 运行服务：
 ```ps

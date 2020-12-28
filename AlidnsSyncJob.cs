@@ -8,6 +8,8 @@ using Aliyun.Acs.Core.Profile;
 using Aliyun.Acs.Alidns.Model.V20150109;
 using System.Linq;
 using System;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace AlidnsSyncService
 {
@@ -15,29 +17,53 @@ namespace AlidnsSyncService
     {
         private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
 
+        private readonly IConfiguration _configuration;
+        private readonly ILogger<AlidnsSyncJob> _logger;
+
+        private readonly string _dnsDomain;
+        private readonly string _domainName;
+        private readonly string _rr;
+        private readonly string _accessKeyId;
+        private readonly string _accessKeySecret;
+
+        public AlidnsSyncJob(IConfiguration configuration, ILogger<AlidnsSyncJob> logger)
+        {
+            _configuration = configuration;
+            _logger = logger;
+            _accessKeyId = _configuration.GetValue<string>("Alidns:AccessKeyId");
+            _accessKeySecret = _configuration.GetValue<string>("Alidns:AccessKeySecret");
+            _dnsDomain = _configuration.GetValue<string>("Alidns:DnsDomain");
+            _domainName = GetDomainName();
+            _rr = GetRR();
+        }
+
         public async Task Execute(IJobExecutionContext context)
         {
             await _semaphore.WaitAsync();
-            var domainName = GetDomainName();
-            var rr = GetRR();
             try
             {
                 var myIp = await GetMyIpAddress();
-                var domainRecords = GetDnsRecordsByDomainName(domainName);
-                var domainToUpdate = domainRecords.FirstOrDefault(r => r.RR == rr);
+                var domainRecords = GetDnsRecordsByDomainName(_domainName);
+                var domainToUpdate = domainRecords.FirstOrDefault(r => r.RR == _rr);
                 if (domainToUpdate.Equals(default(DomainRecord)))
                 {
-                    AddDnsDomainRecord(domainName, new DomainRecord { RR = rr, Value = myIp, TTL = 600 });
+                    AddDnsDomainRecord(_domainName, new DomainRecord { RR = _rr, Value = myIp, TTL = 600 });
+                    _logger.LogInformation($"[{DateTimeOffset.Now}] Add new record.");
                 }
                 else if (domainToUpdate.Value != myIp)
                 {
                     domainToUpdate.Value = myIp;
                     UpdateDnsDomainRecord(domainToUpdate);
+                    _logger.LogInformation($"[{DateTimeOffset.Now}] Update record.");
+                }
+                else
+                {
+                    _logger.LogInformation($"[{DateTimeOffset.Now}] Skipped.");
                 }
             }
             catch(Exception e)
             {
-
+                _logger.LogError(e, e.Message);
             }
             _semaphore.Release();
         }
@@ -49,9 +75,9 @@ namespace AlidnsSyncService
             return await ipResponse.Content.ReadAsStringAsync();
         }
 
-        private static IEnumerable<DomainRecord> GetDnsRecordsByDomainName(string domainName)
+        private IEnumerable<DomainRecord> GetDnsRecordsByDomainName(string domainName)
         {
-            IClientProfile profile = DefaultProfile.GetProfile("cn-hangzhou", Worker.AccessKeyId, Worker.AccessKeySecret);
+            IClientProfile profile = DefaultProfile.GetProfile("cn-hangzhou", _accessKeyId, _accessKeySecret);
             DefaultAcsClient client = new DefaultAcsClient(profile);
             var request = new DescribeDomainRecordsRequest { DomainName = domainName };
             var response = client.GetAcsResponse(request);
@@ -65,9 +91,9 @@ namespace AlidnsSyncService
                 });
         }
 
-        private static void AddDnsDomainRecord(string domainName, DomainRecord record)
+        private void AddDnsDomainRecord(string domainName, DomainRecord record)
         {
-            IClientProfile profile = DefaultProfile.GetProfile("cn-hangzhou", Worker.AccessKeyId, Worker.AccessKeySecret);
+            IClientProfile profile = DefaultProfile.GetProfile("cn-hangzhou", _accessKeyId, _accessKeySecret);
             DefaultAcsClient client = new DefaultAcsClient(profile);
             var request = new AddDomainRecordRequest
             {
@@ -80,9 +106,9 @@ namespace AlidnsSyncService
             client.GetAcsResponse(request);
         }
 
-        private static void UpdateDnsDomainRecord(DomainRecord record)
+        private void UpdateDnsDomainRecord(DomainRecord record)
         {
-            IClientProfile profile = DefaultProfile.GetProfile("cn-hangzhou", Worker.AccessKeyId, Worker.AccessKeySecret);
+            IClientProfile profile = DefaultProfile.GetProfile("cn-hangzhou", _accessKeyId, _accessKeySecret);
             DefaultAcsClient client = new DefaultAcsClient(profile);
             var request = new UpdateDomainRecordRequest
             {
@@ -95,22 +121,22 @@ namespace AlidnsSyncService
             client.GetAcsResponse(request);
         }
 
-        private static string GetDomainName()
+        private string GetDomainName()
         {
-            int index = Worker.DnsDomain.LastIndexOf('.');
+            int index = _dnsDomain.LastIndexOf('.');
             if (index == -1) return null;
-            index = Worker.DnsDomain[..index].LastIndexOf('.');
-            if (index == -1) return Worker.DnsDomain;
-            return Worker.DnsDomain[(index + 1)..];
+            index = _dnsDomain[..index].LastIndexOf('.');
+            if (index == -1) return _dnsDomain;
+            return _dnsDomain[(index + 1)..];
         }
 
-        private static string GetRR()
+        private string GetRR()
         {
-            int index = Worker.DnsDomain.LastIndexOf('.');
+            int index = _dnsDomain.LastIndexOf('.');
             if (index == -1) return null;
-            index = Worker.DnsDomain[..index].LastIndexOf('.');
-            if (index == -1) return Worker.DnsDomain;
-            return Worker.DnsDomain[..index];
+            index = _dnsDomain[..index].LastIndexOf('.');
+            if (index == -1) return _dnsDomain;
+            return _dnsDomain[..index];
         }
     }
 
@@ -120,5 +146,10 @@ namespace AlidnsSyncService
         public string RR { get; set; }
         public string Value { get; set; }
         public long? TTL { get; set; }
+
+        public override string ToString()
+        {
+            return $"[Record] Id: {RecordId}, RR: {RR}, Value: {Value}, TTL: {TTL}";
+        }
     }
 }

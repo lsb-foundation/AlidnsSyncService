@@ -1,7 +1,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Quartz.Spi;
 using System.IO;
+using Serilog;
 
 namespace AlidnsSyncService
 {
@@ -15,6 +17,14 @@ namespace AlidnsSyncService
                 .AddJsonFile("appsettings.json")
                 .Build();
 
+            var logPath = _configuration.GetValue<string>("BackgroundTask:LogPath");
+
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.File(logPath, rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -23,9 +33,12 @@ namespace AlidnsSyncService
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddSingleton(_configuration)
-                            .AddHostedService<Worker>();
+                            .AddHostedService<Worker>()
+                            .AddTransient<AlidnsSyncJob>()
+                            .AddTransient<IJobFactory, AlidnsSyncJobFactory>();
                 })
             .UseWindowsService()
             .UseSystemd();
+            //.UseSerilog()
     }
 }

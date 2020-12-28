@@ -1,0 +1,122 @@
+2020-12-28 15:27:23.936 +08:00 [INF] Default Quartz.NET properties loaded from embedded resource file
+2020-12-28 15:27:24.203 +08:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-12-28 15:27:24.207 +08:00 [INF] Quartz Scheduler v.3.2.3.0 created.
+2020-12-28 15:27:24.212 +08:00 [INF] RAMJobStore initialized.
+2020-12-28 15:27:24.231 +08:00 [INF] Scheduler meta-data: Quartz Scheduler (v3.2.3.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-12-28 15:27:24.233 +08:00 [INF] Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-12-28 15:27:24.234 +08:00 [INF] Quartz scheduler version: 3.2.3.0
+2020-12-28 15:27:24.237 +08:00 [INF] JobFactory set to: AlidnsSyncService.AlidnsSyncJobFactory
+2020-12-28 15:27:24.255 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-12-28 15:27:24.308 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-12-28 15:27:24.315 +08:00 [INF] Hosting environment: Development
+2020-12-28 15:27:24.321 +08:00 [INF] Content root path: D:\Codes\git_repos\AlidnsSyncService
+2020-12-28 15:27:27.047 +08:00 [INF] [2020/12/28 15:27:27 +08:00] Add new record.
+2020-12-28 15:29:26.894 +08:00 [INF] [2020/12/28 15:29:26 +08:00] Add new record.
+2020-12-28 15:29:47.953 +08:00 [INF] Application is shutting down...
+2020-12-28 15:29:47.963 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
+2020-12-28 15:29:47.965 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
+2020-12-28 15:29:47.969 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.
+2020-12-28 15:29:54.372 +08:00 [INF] Default Quartz.NET properties loaded from embedded resource file
+2020-12-28 15:29:54.564 +08:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-12-28 15:29:54.576 +08:00 [INF] Quartz Scheduler v.3.2.3.0 created.
+2020-12-28 15:29:54.580 +08:00 [INF] RAMJobStore initialized.
+2020-12-28 15:29:54.586 +08:00 [INF] Scheduler meta-data: Quartz Scheduler (v3.2.3.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-12-28 15:29:54.587 +08:00 [INF] Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-12-28 15:29:54.587 +08:00 [INF] Quartz scheduler version: 3.2.3.0
+2020-12-28 15:29:54.589 +08:00 [INF] JobFactory set to: AlidnsSyncService.AlidnsSyncJobFactory
+2020-12-28 15:29:54.603 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-12-28 15:29:54.633 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-12-28 15:29:54.649 +08:00 [INF] Hosting environment: Development
+2020-12-28 15:29:54.651 +08:00 [INF] Content root path: D:\Codes\git_repos\AlidnsSyncService
+2020-12-28 15:29:57.267 +08:00 [INF] [2020/12/28 15:29:57 +08:00] Add new record.
+2020-12-28 15:30:46.289 +08:00 [INF] Application is shutting down...
+2020-12-28 15:30:46.302 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
+2020-12-28 15:30:46.305 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
+2020-12-28 15:30:46.308 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.
+2020-12-28 15:37:10.341 +08:00 [INF] Default Quartz.NET properties loaded from embedded resource file
+2020-12-28 15:37:10.689 +08:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-12-28 15:37:10.694 +08:00 [INF] Quartz Scheduler v.3.2.3.0 created.
+2020-12-28 15:37:10.709 +08:00 [INF] RAMJobStore initialized.
+2020-12-28 15:37:10.715 +08:00 [INF] Scheduler meta-data: Quartz Scheduler (v3.2.3.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-12-28 15:37:10.717 +08:00 [INF] Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-12-28 15:37:10.721 +08:00 [INF] Quartz scheduler version: 3.2.3.0
+2020-12-28 15:37:10.723 +08:00 [INF] JobFactory set to: AlidnsSyncService.AlidnsSyncJobFactory
+2020-12-28 15:37:10.734 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-12-28 15:37:10.769 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-12-28 15:37:10.783 +08:00 [INF] Hosting environment: Development
+2020-12-28 15:37:10.784 +08:00 [INF] Content root path: D:\Codes\git_repos\AlidnsSyncService
+2020-12-28 15:37:12.389 +08:00 [INF] Add: [Record] Id: , RR: abc, DomainName: microbubu.com, Value: 219.147.11.107, TTL: 600
+2020-12-28 15:38:04.998 +08:00 [INF] Application is shutting down...
+2020-12-28 15:38:05.009 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
+2020-12-28 15:38:05.011 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
+2020-12-28 15:38:05.015 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.
+2020-12-28 15:41:56.915 +08:00 [INF] Default Quartz.NET properties loaded from embedded resource file
+2020-12-28 15:41:57.120 +08:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-12-28 15:41:57.135 +08:00 [INF] Quartz Scheduler v.3.2.3.0 created.
+2020-12-28 15:41:57.139 +08:00 [INF] RAMJobStore initialized.
+2020-12-28 15:41:57.145 +08:00 [INF] Scheduler meta-data: Quartz Scheduler (v3.2.3.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-12-28 15:41:57.146 +08:00 [INF] Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-12-28 15:41:57.147 +08:00 [INF] Quartz scheduler version: 3.2.3.0
+2020-12-28 15:41:57.149 +08:00 [INF] JobFactory set to: AlidnsSyncService.AlidnsSyncJobFactory
+2020-12-28 15:41:57.163 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-12-28 15:41:57.217 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-12-28 15:41:57.241 +08:00 [INF] Hosting environment: Development
+2020-12-28 15:41:57.243 +08:00 [INF] Content root path: D:\Codes\git_repos\AlidnsSyncService
+2020-12-28 15:41:58.739 +08:00 [INF] Add: {"RecordId":null,"RR":"abc","DomainName":"microbubu.com","Value":"219.147.11.107","TTL":600}
+2020-12-28 15:42:13.919 +08:00 [INF] Application is shutting down...
+2020-12-28 15:42:13.927 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
+2020-12-28 15:42:13.931 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
+2020-12-28 15:42:13.935 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.
+2020-12-28 15:42:28.664 +08:00 [INF] Default Quartz.NET properties loaded from embedded resource file
+2020-12-28 15:42:28.969 +08:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2020-12-28 15:42:28.974 +08:00 [INF] Quartz Scheduler v.3.2.3.0 created.
+2020-12-28 15:42:28.988 +08:00 [INF] RAMJobStore initialized.
+2020-12-28 15:42:28.996 +08:00 [INF] Scheduler meta-data: Quartz Scheduler (v3.2.3.0) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'Quartz.Core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'Quartz.Simpl.DefaultThreadPool' - with 10 threads.
+  Using job-store 'Quartz.Simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2020-12-28 15:42:28.997 +08:00 [INF] Quartz scheduler 'DefaultQuartzScheduler' initialized
+2020-12-28 15:42:29.002 +08:00 [INF] Quartz scheduler version: 3.2.3.0
+2020-12-28 15:42:29.004 +08:00 [INF] JobFactory set to: AlidnsSyncService.AlidnsSyncJobFactory
+2020-12-28 15:42:29.021 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2020-12-28 15:42:29.075 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-12-28 15:42:29.083 +08:00 [INF] Hosting environment: Development
+2020-12-28 15:42:29.091 +08:00 [INF] Content root path: D:\Codes\git_repos\AlidnsSyncService
+2020-12-28 15:42:31.300 +08:00 [INF] Add: {"RecordId":null,"RR":"abc","DomainName":"microbubu.com","Value":"219.147.11.107","TTL":600}
+2020-12-28 15:44:33.452 +08:00 [INF] Skipped.
+2020-12-28 15:44:49.464 +08:00 [INF] Application is shutting down...
+2020-12-28 15:44:49.473 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
+2020-12-28 15:44:49.475 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
+2020-12-28 15:44:49.480 +08:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.

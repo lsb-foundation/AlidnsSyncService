@@ -10,6 +10,7 @@ using System.Linq;
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace AlidnsSyncService
 {
@@ -47,18 +48,20 @@ namespace AlidnsSyncService
                 var domainToUpdate = domainRecords.FirstOrDefault(r => r.RR == _rr);
                 if (domainToUpdate.Equals(default(DomainRecord)))
                 {
-                    AddDnsDomainRecord(_domainName, new DomainRecord { RR = _rr, Value = myIp, TTL = 600 });
-                    _logger.LogInformation($"[{DateTimeOffset.Now}] Add new record.");
+                    var domainRecord = new DomainRecord { RR = _rr, DomainName = _domainName, Value = myIp, TTL = 600 };
+                    AddDnsDomainRecord(domainRecord);
+                    _logger.LogInformation($"Add: {domainRecord}");
                 }
                 else if (domainToUpdate.Value != myIp)
                 {
+                    domainToUpdate.DomainName = _domainName;
                     domainToUpdate.Value = myIp;
                     UpdateDnsDomainRecord(domainToUpdate);
-                    _logger.LogInformation($"[{DateTimeOffset.Now}] Update record.");
+                    _logger.LogInformation($"Update: {domainToUpdate}");
                 }
                 else
                 {
-                    _logger.LogInformation($"[{DateTimeOffset.Now}] Skipped.");
+                    _logger.LogInformation($"Skipped.");
                 }
             }
             catch(Exception e)
@@ -91,13 +94,13 @@ namespace AlidnsSyncService
                 });
         }
 
-        private void AddDnsDomainRecord(string domainName, DomainRecord record)
+        private void AddDnsDomainRecord(DomainRecord record)
         {
             IClientProfile profile = DefaultProfile.GetProfile("cn-hangzhou", _accessKeyId, _accessKeySecret);
             DefaultAcsClient client = new DefaultAcsClient(profile);
             var request = new AddDomainRecordRequest
             {
-                DomainName = domainName,
+                DomainName = record.DomainName,
                 RR = record.RR,
                 Value = record.Value,
                 TTL = record.TTL,
@@ -144,12 +147,13 @@ namespace AlidnsSyncService
     {
         public string RecordId { get; set; }
         public string RR { get; set; }
+        public string DomainName { get; set; }
         public string Value { get; set; }
         public long? TTL { get; set; }
 
         public override string ToString()
         {
-            return $"[Record] Id: {RecordId}, RR: {RR}, Value: {Value}, TTL: {TTL}";
+            return JsonConvert.SerializeObject(this);
         }
     }
 }

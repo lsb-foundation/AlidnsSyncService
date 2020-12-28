@@ -38,7 +38,7 @@ namespace AlidnsSyncService
                             .AddTransient<IJobFactory, AlidnsSyncJobFactory>();
                 })
             .UseWindowsService()
-            .UseSystemd();
-            //.UseSerilog()
+            .UseSystemd()
+            .UseSerilog();
     }
 }

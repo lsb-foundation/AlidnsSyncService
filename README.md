@@ -1,5 +1,5 @@
 # AlidnsSyncService
-基于dotnet core 3/.Net 5编写的阿里dns后台同步服务，适用于Windows及Linux.
+基于.Net 5编写的阿里dns后台同步服务，适用于Windows及Linux.
 
 ## 使用方法
 1. 确保已安装.Net 5 Runtime;

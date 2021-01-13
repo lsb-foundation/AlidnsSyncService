@@ -14,10 +14,7 @@ namespace AlidnsSyncService
     {
         private readonly IConfiguration _configuration;
         private readonly IJobFactory _jobFactory;
-
         private IScheduler scheduler;
-
-        private int intervalSeconds;
 
         public Worker(IConfiguration configuration, IJobFactory jobFactory)
         {
@@ -27,7 +24,7 @@ namespace AlidnsSyncService
 
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
-            intervalSeconds = _configuration.GetValue<int>("BackgroundTask:IntervalSeconds");
+            int intervalSeconds = _configuration.GetValue<int>("BackgroundTask:IntervalSeconds");
 
             scheduler = await new StdSchedulerFactory().GetScheduler(cancellationToken);
             scheduler.JobFactory = _jobFactory;

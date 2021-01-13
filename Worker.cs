@@ -24,7 +24,7 @@ namespace AlidnsSyncService
 
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
-            int intervalSeconds = _configuration.GetValue<int>("BackgroundTask:IntervalSeconds");
+            int intervalSeconds = _configuration.GetValue<int>("Alidns:IntervalSeconds");
 
             scheduler = await new StdSchedulerFactory().GetScheduler(cancellationToken);
             scheduler.JobFactory = _jobFactory;

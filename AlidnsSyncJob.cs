@@ -18,10 +18,8 @@ namespace AlidnsSyncService
     {
         private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
 
-        private readonly IConfiguration _configuration;
         private readonly ILogger<AlidnsSyncJob> _logger;
 
-        private readonly string _dnsDomain;
         private readonly string _domainName;
         private readonly string _rr;
         private readonly string _accessKeyId;
@@ -29,13 +27,12 @@ namespace AlidnsSyncService
 
         public AlidnsSyncJob(IConfiguration configuration, ILogger<AlidnsSyncJob> logger)
         {
-            _configuration = configuration;
             _logger = logger;
-            _accessKeyId = _configuration.GetValue<string>("Alidns:AccessKeyId");
-            _accessKeySecret = _configuration.GetValue<string>("Alidns:AccessKeySecret");
-            _dnsDomain = _configuration.GetValue<string>("Alidns:DnsDomain");
-            _domainName = GetDomainName();
-            _rr = GetRR();
+            _accessKeyId = configuration.GetValue<string>("Alidns:AccessKeyId");
+            _accessKeySecret = configuration.GetValue<string>("Alidns:AccessKeySecret");
+            var dnsDomain = configuration.GetValue<string>("Alidns:DnsDomain");
+            _domainName = GetDomainName(dnsDomain);
+            _rr = GetRR(dnsDomain);
         }
 
         public async Task Execute(IJobExecutionContext context)
@@ -44,6 +41,7 @@ namespace AlidnsSyncService
             try
             {
                 var myIp = await GetMyIpAddress();
+                _logger.LogInformation($"Current IP Address: {myIp}");
                 var domainRecords = GetDnsRecords();
                 var domainToUpdate = domainRecords.FirstOrDefault(r => r.RR == _rr);
                 if (domainToUpdate.Equals(default(DomainRecord)))
@@ -124,22 +122,22 @@ namespace AlidnsSyncService
             client.GetAcsResponse(request);
         }
 
-        private string GetDomainName()
+        private static string GetDomainName(string dnsDomain)
         {
-            int index = _dnsDomain.LastIndexOf('.');
-            if (index == -1) return null;
-            index = _dnsDomain[..index].LastIndexOf('.');
-            if (index == -1) return _dnsDomain;
-            return _dnsDomain[(index + 1)..];
+            int index = dnsDomain.LastIndexOf('.');
+            if (index == -1) throw new ArgumentIsNotDomainException();
+            index = dnsDomain[..index].LastIndexOf('.');
+            if (index == -1) return dnsDomain;
+            return dnsDomain[(index + 1)..];
         }
 
-        private string GetRR()
+        private static string GetRR(string dnsDomain)
         {
-            int index = _dnsDomain.LastIndexOf('.');
-            if (index == -1) return null;
-            index = _dnsDomain[..index].LastIndexOf('.');
-            if (index == -1) return _dnsDomain;
-            return _dnsDomain[..index];
+            int index = dnsDomain.LastIndexOf('.');
+            if (index == -1) throw new ArgumentIsNotDomainException();
+            index = dnsDomain[..index].LastIndexOf('.');
+            if (index == -1) return dnsDomain;
+            return dnsDomain[..index];
         }
     }
 
@@ -156,4 +154,6 @@ namespace AlidnsSyncService
             return JsonConvert.SerializeObject(this);
         }
     }
+
+    public sealed class ArgumentIsNotDomainException : Exception { }
 }

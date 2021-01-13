@@ -27,12 +27,12 @@ namespace AlidnsSyncService
                     services.AddSingleton(_configuration)
                             .AddHostedService<Worker>()
                             .AddTransient<AlidnsSyncJob>()
-                            .AddTransient<IJobFactory, AlidnsSyncJobFactory>()
+                            .AddTransient<CleanLogJob>()
+                            .AddTransient<IJobFactory, JobFactoryImplement>()
                             .AddTransient<LoggerConfiguration>();
 
                     var serviceProvider = services.BuildServiceProvider();
-                    var logPath = _configuration.GetValue<string>("BackgroundTask:LogPath");
-                    logPath = Path.Combine(serviceProvider.GetRequiredService<IHostEnvironment>().ContentRootPath, logPath);
+                    var logPath = Path.Combine(serviceProvider.GetRequiredService<IHostEnvironment>().ContentRootPath, "logs/log.txt");
                     Log.Logger = serviceProvider.GetRequiredService<LoggerConfiguration>()
                                 .Enrich.FromLogContext()
                                 .WriteTo.Console()

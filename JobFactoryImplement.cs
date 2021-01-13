@@ -1,28 +1,26 @@
 ﻿using Quartz;
 using Quartz.Spi;
 using System;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace AlidnsSyncService
 {
-    public class AlidnsSyncJobFactory : IJobFactory
+    public class JobFactoryImplement : IJobFactory
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public AlidnsSyncJobFactory(IServiceProvider serviceProvider)
+        public JobFactoryImplement(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
 
         public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
         {
-            return _serviceProvider.GetService<AlidnsSyncJob>();
+            return _serviceProvider.GetService(bundle.JobDetail.JobType) as IJob;
         }
 
         public void ReturnJob(IJob job)
         {
-            var disposable = job as IDisposable;
-            disposable?.Dispose();
+            (job as IDisposable)?.Dispose();
         }
     }
 }

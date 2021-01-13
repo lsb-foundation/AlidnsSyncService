@@ -5,6 +5,8 @@ using Microsoft.Extensions.Hosting;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace AlidnsSyncService
 {
@@ -13,7 +15,8 @@ namespace AlidnsSyncService
         private readonly IConfiguration _configuration;
         private readonly IJobFactory _jobFactory;
 
-        private IScheduler _scheduler;
+        private IScheduler scheduler;
+
         private int intervalSeconds;
 
         public Worker(IConfiguration configuration, IJobFactory jobFactory)
@@ -26,19 +29,33 @@ namespace AlidnsSyncService
         {
             intervalSeconds = _configuration.GetValue<int>("BackgroundTask:IntervalSeconds");
 
-            _scheduler = await new StdSchedulerFactory().GetScheduler(cancellationToken);
-            _scheduler.JobFactory = _jobFactory;
-            await _scheduler.Start(cancellationToken);
+            scheduler = await new StdSchedulerFactory().GetScheduler(cancellationToken);
+            scheduler.JobFactory = _jobFactory;
+            await scheduler.Start(cancellationToken);
 
-            IJobDetail job = JobBuilder.Create<AlidnsSyncJob>().Build();
-            ITrigger trigger = TriggerBuilder.Create()
+            IJobDetail alidnsJob = JobBuilder.Create<AlidnsSyncJob>().Build();
+            ITrigger alidnsTrigger = TriggerBuilder.Create()
                 .StartNow()
                 .WithSimpleSchedule(x => 
                     x.WithIntervalInSeconds(intervalSeconds)
                      .RepeatForever())
                 .Build();
 
-            await _scheduler.ScheduleJob(job, trigger, cancellationToken);
+            IJobDetail cleanLogJob = JobBuilder.Create<CleanLogJob>().Build();
+            ITrigger cleanLogTrigger = TriggerBuilder.Create()
+                .WithDailyTimeIntervalSchedule(x =>
+                    x.OnEveryDay()
+                    .StartingDailyAt(TimeOfDay.HourMinuteAndSecondOfDay(16, 17, 0))
+                    .EndingDailyAfterCount(1))
+                .Build();
+
+            var triggerJobsDict = new Dictionary<IJobDetail, IReadOnlyCollection<ITrigger>>
+            {
+                { alidnsJob, new List<ITrigger>{ alidnsTrigger }.AsReadOnly() },
+                { cleanLogJob, new List<ITrigger>{ cleanLogTrigger }.AsReadOnly() }
+            };
+            var triggerAndJobs = new ReadOnlyDictionary<IJobDetail, IReadOnlyCollection<ITrigger>>(triggerJobsDict);
+            await scheduler.ScheduleJobs(triggerAndJobs, true, cancellationToken);
 
             await base.StartAsync(cancellationToken);
         }
@@ -50,7 +67,7 @@ namespace AlidnsSyncService
 
         public override async Task StopAsync(CancellationToken cancellationToken)
         {
-            await _scheduler.Shutdown(cancellationToken);
+            await scheduler.Shutdown(cancellationToken);
             await base.StopAsync(cancellationToken);
         }
     }

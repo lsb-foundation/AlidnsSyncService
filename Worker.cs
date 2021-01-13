@@ -45,7 +45,7 @@ namespace AlidnsSyncService
             ITrigger cleanLogTrigger = TriggerBuilder.Create()
                 .WithDailyTimeIntervalSchedule(x =>
                     x.OnEveryDay()
-                    .StartingDailyAt(TimeOfDay.HourMinuteAndSecondOfDay(16, 17, 0))
+                    .StartingDailyAt(TimeOfDay.HourMinuteAndSecondOfDay(0, 30, 0))
                     .EndingDailyAfterCount(1))
                 .Build();
 

@@ -25,6 +25,11 @@ namespace AlidnsSyncService
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
             int intervalSeconds = _configuration.GetValue<int>("Alidns:IntervalSeconds");
+            string[] cleanTimeStrings = _configuration.GetValue<string>("Alidns:DailyCleanTime").Split(':');
+            
+            int cleanTimeHour = int.Parse(cleanTimeStrings[0]);
+            int cleanTimeMinute = int.Parse(cleanTimeStrings[1]);
+            int cleanTimeSecond = int.Parse(cleanTimeStrings[2]);
 
             scheduler = await new StdSchedulerFactory().GetScheduler(cancellationToken);
             scheduler.JobFactory = _jobFactory;
@@ -42,7 +47,7 @@ namespace AlidnsSyncService
             ITrigger cleanLogTrigger = TriggerBuilder.Create()
                 .WithDailyTimeIntervalSchedule(x =>
                     x.OnEveryDay()
-                    .StartingDailyAt(TimeOfDay.HourMinuteAndSecondOfDay(0, 30, 0))
+                    .StartingDailyAt(TimeOfDay.HourMinuteAndSecondOfDay(cleanTimeHour, cleanTimeMinute, cleanTimeSecond))
                     .EndingDailyAfterCount(1))
                 .Build();
 

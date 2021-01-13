@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -14,12 +15,15 @@ namespace AlidnsSyncService
     public class CleanLogJob : IJob
     {
         private readonly string _logPath;
+        private readonly int _logFileMaxCount;
         private readonly ILogger<CleanLogJob> _logger;
 
-        public CleanLogJob(IServiceProvider serviceProvider, ILogger<CleanLogJob> logger)
+        public CleanLogJob(IServiceProvider serviceProvider, ILogger<CleanLogJob> logger, IConfiguration configuration)
         {
             _logger = logger;
             _logPath = Path.Combine(serviceProvider.GetRequiredService<IHostEnvironment>().ContentRootPath, "logs");
+            _logFileMaxCount = configuration.GetValue<int>("Alidns:LogFilesMaxCount");
+            if (_logFileMaxCount <= 0) _logFileMaxCount = 30;
         }
 
         public Task Execute(IJobExecutionContext context)
@@ -34,9 +38,9 @@ namespace AlidnsSyncService
                         logFiles.Add(fileName);
                 }
                 logFiles = logFiles.OrderBy(file => new FileInfo(file).CreationTime).ToList();
-                if (logFiles.Count > 30)
+                if (logFiles.Count > _logFileMaxCount)
                 {
-                    int count = logFiles.Count - 30;
+                    int count = logFiles.Count - _logFileMaxCount;
                     foreach (var file in logFiles.Take(count))
                     {
                         File.Delete(file);

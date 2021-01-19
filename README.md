@@ -15,6 +15,11 @@ Start-Service -Name "AlidnsSync"
 ```
 也可以直接在Windows服务管理中开启。
 
+## 配置Server酱微信推送
+1. 如果没有用过Server酱，请先从[Server酱](http://sc.ftqq.com/3.version)获取SCKEY;
+2. 将appsettings.json文件中的ServerChanSCKey值更新为你的Server酱SCKey;
+3. 重新安装或重启服务。
+
 ## 卸载
 ```
 Stop-Service -Name "AlidnsSync"

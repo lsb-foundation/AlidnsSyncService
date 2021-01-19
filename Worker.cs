@@ -25,7 +25,7 @@ namespace AlidnsSyncService
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
             int intervalSeconds = _configuration.GetValue<int>("Alidns:IntervalSeconds");
-            string[] cleanTimeStrings = _configuration.GetValue<string>("Alidns:DailyCleanTime").Split(':');
+            string[] cleanTimeStrings = _configuration.GetValue<string>("DailyCleanTime").Split(':');
             
             int cleanTimeHour = int.Parse(cleanTimeStrings[0]);
             int cleanTimeMinute = int.Parse(cleanTimeStrings[1]);

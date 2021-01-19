@@ -29,7 +29,8 @@ namespace AlidnsSyncService
                             .AddTransient<AlidnsSyncJob>()
                             .AddTransient<CleanLogJob>()
                             .AddTransient<IJobFactory, JobFactoryImplement>()
-                            .AddTransient<LoggerConfiguration>();
+                            .AddTransient<LoggerConfiguration>()
+                            .AddTransient<ServerChan>();
 
                     var serviceProvider = services.BuildServiceProvider();
                     var logPath = Path.Combine(serviceProvider.GetRequiredService<IHostEnvironment>().ContentRootPath, "logs/log.txt");

@@ -11,6 +11,7 @@ using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace AlidnsSyncService
 {
@@ -19,13 +20,14 @@ namespace AlidnsSyncService
         private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
 
         private readonly ILogger<AlidnsSyncJob> _logger;
+        private readonly ServerChan _serverChan;
 
         private readonly string _domainName;
         private readonly string _rr;
         private readonly string _accessKeyId;
         private readonly string _accessKeySecret;
 
-        public AlidnsSyncJob(IConfiguration configuration, ILogger<AlidnsSyncJob> logger)
+        public AlidnsSyncJob(IConfiguration configuration, ILogger<AlidnsSyncJob> logger, ServerChan serverChan)
         {
             _logger = logger;
             _accessKeyId = configuration.GetValue<string>("Alidns:AccessKeyId");
@@ -33,6 +35,7 @@ namespace AlidnsSyncService
             var dnsDomain = configuration.GetValue<string>("Alidns:DnsDomain");
             _domainName = GetDomainName(dnsDomain);
             _rr = GetRR(dnsDomain);
+            _serverChan = serverChan;
         }
 
         public async Task Execute(IJobExecutionContext context)
@@ -49,6 +52,7 @@ namespace AlidnsSyncService
                     var domainRecord = new DomainRecord { RR = _rr, DomainName = _domainName, Value = myIp, TTL = 600 };
                     AddDnsRecord(domainRecord);
                     _logger.LogInformation($"Add: {domainRecord}");
+                    _serverChan.Push("新增DNS", domainRecord.ToString());
                 }
                 else if (domainToUpdate.Value != myIp)
                 {
@@ -56,13 +60,14 @@ namespace AlidnsSyncService
                     domainToUpdate.Value = myIp;
                     UpdateDnsRecord(domainToUpdate);
                     _logger.LogInformation($"Update: {domainToUpdate}");
+                    _serverChan.Push("DNS已更新", domainRecords.ToString());
                 }
                 else
                 {
                     _logger.LogInformation($"Skipped.");
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
             }
@@ -136,7 +141,7 @@ namespace AlidnsSyncService
             int index = dnsDomain.LastIndexOf('.');
             if (index == -1) throw new ArgumentIsNotDomainException();
             index = dnsDomain[..index].LastIndexOf('.');
-            if (index == -1) return dnsDomain;
+            if (index == -1) throw new DomainHasNoRRException();
             return dnsDomain[..index];
         }
     }
@@ -149,11 +154,17 @@ namespace AlidnsSyncService
         public string Value { get; set; }
         public long? TTL { get; set; }
 
-        public override string ToString()
+        public string ToJsonString()
         {
             return JsonConvert.SerializeObject(this);
+        }
+
+        public override string ToString()
+        {
+            return $"{RR}.{DomainName} => {Value}";
         }
     }
 
     public sealed class ArgumentIsNotDomainException : Exception { }
+    public sealed class DomainHasNoRRException : Exception { }
 }

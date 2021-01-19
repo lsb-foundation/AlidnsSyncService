@@ -22,7 +22,7 @@ namespace AlidnsSyncService
         {
             _logger = logger;
             _logPath = Path.Combine(serviceProvider.GetRequiredService<IHostEnvironment>().ContentRootPath, "logs");
-            _logFileMaxCount = configuration.GetValue<int>("Alidns:LogFilesMaxCount");
+            _logFileMaxCount = configuration.GetValue<int>("LogFilesMaxCount");
             if (_logFileMaxCount <= 0) _logFileMaxCount = 30;
         }
 

@@ -43,6 +43,11 @@ namespace AlidnsSyncService
             await _semaphore.WaitAsync();
             try
             {
+                if (string.IsNullOrWhiteSpace(_accessKeyId) || string.IsNullOrWhiteSpace(_accessKeySecret))
+                {
+                    throw new Exception("AccessKeyId and AccessKeySecret cant't be empty.");
+                }
+
                 var myIp = await GetMyIpAddress();
                 _logger.LogInformation($"Current IP Address: {myIp}");
                 var domainRecords = GetDnsRecords();

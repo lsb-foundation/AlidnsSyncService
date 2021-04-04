@@ -10,24 +10,24 @@ using System.Linq;
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using System.Text;
 
 namespace AlidnsSyncService
 {
     public class AlidnsSyncJob : IJob
     {
-        private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
+        private static readonly SemaphoreSlim _semaphore = new(1);
 
         private readonly ILogger<AlidnsSyncJob> _logger;
-        private readonly ServerChan _serverChan;
+        private readonly IServiceProvider _provider;
 
         private readonly string _domainName;
         private readonly string _rr;
         private readonly string _accessKeyId;
         private readonly string _accessKeySecret;
 
-        public AlidnsSyncJob(IConfiguration configuration, ILogger<AlidnsSyncJob> logger, ServerChan serverChan)
+        public AlidnsSyncJob(IConfiguration configuration, ILogger<AlidnsSyncJob> logger, IServiceProvider provider)
         {
             _logger = logger;
             _accessKeyId = configuration.GetValue<string>("Alidns:AccessKeyId");
@@ -35,7 +35,7 @@ namespace AlidnsSyncService
             var dnsDomain = configuration.GetValue<string>("Alidns:DnsDomain");
             _domainName = GetDomainName(dnsDomain);
             _rr = GetRR(dnsDomain);
-            _serverChan = serverChan;
+            _provider = provider;
         }
 
         public async Task Execute(IJobExecutionContext context)
@@ -57,7 +57,7 @@ namespace AlidnsSyncService
                     var domainRecord = new DomainRecord { RR = _rr, DomainName = _domainName, Value = myIp, TTL = 600 };
                     AddDnsRecord(domainRecord);
                     _logger.LogInformation($"Add: {domainRecord}");
-                    _serverChan.Push("新增DNS", domainRecord.ToString());
+                    PushMessage("阿里云DNS同步服务：添加DNS", domainRecord.ToString());
                 }
                 else if (domainToUpdate.Value != myIp)
                 {
@@ -65,7 +65,7 @@ namespace AlidnsSyncService
                     domainToUpdate.Value = myIp;
                     UpdateDnsRecord(domainToUpdate);
                     _logger.LogInformation($"Update: {domainToUpdate}");
-                    _serverChan.Push("DNS已更新", domainRecords.ToString());
+                    PushMessage("阿里云DNS同步服务：更新DNS", domainToUpdate.ToString());
                 }
                 else
                 {
@@ -96,6 +96,7 @@ namespace AlidnsSyncService
                 r => new DomainRecord
                 {
                     RecordId = r.RecordId,
+                    DomainName = _domainName,
                     RR = r.RR,
                     Value = r.Value,
                     TTL = r.TTL
@@ -149,6 +150,17 @@ namespace AlidnsSyncService
             if (index == -1) throw new DomainHasNoRRException();
             return dnsDomain[..index];
         }
+
+        private void PushMessage(string title, string message)
+        {
+            foreach (IPush push in _provider.GetServices<IPush>())
+            {
+                if (push.CanPush)
+                {
+                    push.Push(title, message);
+                }
+            }
+        }
     }
 
     public struct DomainRecord
@@ -166,7 +178,7 @@ namespace AlidnsSyncService
 
         public override string ToString()
         {
-            return $"{RR}.{DomainName} => {Value}";
+            return $"{RR}.{DomainName} : {Value}";
         }
     }
 

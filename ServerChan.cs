@@ -7,10 +7,9 @@ namespace AlidnsSyncService
     /// <summary>
     /// Server酱推送
     /// </summary>
-    public class ServerChan
+    public class ServerChan : IPush
     {
         private readonly string pushUrl = "https://sc.ftqq.com/";
-        private readonly bool canPush = false;
 
         public ServerChan(IConfiguration configuration)
         {
@@ -18,13 +17,15 @@ namespace AlidnsSyncService
             if (!string.IsNullOrWhiteSpace(scKey))
             {
                 pushUrl += scKey +".send";
-                canPush = true;
+                CanPush = true;
             }
         }
 
+        public bool CanPush { get; } = false;
+
         public async void Push(string title, string content)
         {
-            if (!canPush) return;
+            if (!CanPush) return;
             using var client = new HttpClient();
             var json = new
             {

@@ -9,7 +9,7 @@ namespace AlidnsSyncService
     /// </summary>
     public class ServerChan : IPush
     {
-        private readonly string pushUrl = "https://sc.ftqq.com/";
+        private readonly string pushUrl = "https://sctapi.ftqq.com/";
 
         public ServerChan(IConfiguration configuration)
         {
@@ -34,7 +34,7 @@ namespace AlidnsSyncService
             };
             var kvPairs = new List<KeyValuePair<string, string>>
             {
-                new KeyValuePair<string, string>("text", title),
+                new KeyValuePair<string, string>("title", title),
                 new KeyValuePair<string, string>("desp", content)
             };
             var httpContent = new FormUrlEncodedContent(kvPairs);

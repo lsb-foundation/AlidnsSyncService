@@ -18,6 +18,7 @@ namespace AlidnsSyncService
 
         public async void Push(string title, string message)
         {
+            if (!CanPush) return;
             var barkUrl = string.Format(barkUrlFormat, _barkKey, title, message);
             await new HttpClient().GetAsync(barkUrl);
         }
